@@ -46,12 +46,13 @@ Adds keybindings and remapping functionality to Melvor Idle. View and remap any 
 If you'd like to create a keybinding in your own code managed by Melvor Keybindings, there is a simple API for doing so: `window.kb.register(name, category, defaultKeys, callback)`
 
 ```js
+// Press 'L' to add oak logs to your bank
 if (window.kb)
   window.kb.register(
     'Add oak logs to bank',
-    'General',
+    'Cheats',
     { key: 'L', ctrlKey: false, altKey: false },
-    () => window.addItemToBank(CONSTANTS.item.Oak_Logs, 1)
+    () => window.addItemToBank(CONSTANTS.item.Oak_Logs, 100)
   );
 ```
 
