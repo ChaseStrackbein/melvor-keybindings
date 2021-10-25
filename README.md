@@ -57,3 +57,5 @@ if (window.kb)
 ```
 
 *Note that `category` is currently unused but planned for implementation as tabs in the future. If your mod has multiple keybindings it might be best to choose your own category now.*
+
+It's also important to note that all keys are in uppercase (e.g., `BACKSPACE` or `ENTER`).
