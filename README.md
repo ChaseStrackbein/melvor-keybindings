@@ -1,6 +1,12 @@
 # Melvor Keybindings
 Adds keybindings and remapping functionality to Melvor Idle. View and remap any bindings via the Settings menu (X).
 
+## Installation
+[Get the userscript](https://greasyfork.org/en/scripts/434472-keybindings)
+
+## Usage
+Simply reference the table below (or that in the Settings menu) and press a key to perform its function.
+
 ## List of Default Keybindings
 | Function                   | Keybinding                                      |
 | -------------------------- | ----------------------------------------------- |
@@ -12,6 +18,7 @@ Adds keybindings and remapping functionality to Melvor Idle. View and remap any 
 | Shop                       | <kbd>V</kbd>                                    |
 | Bank                       | <kbd>B</kbd>                                    |
 | Combat                     | <kbd>C</kbd>                                    |
+| Eat Equipped Food          | <kbd>H</kbd>                                    |
 | Loot All (Combat)          | <kbd>SPACE</kbd>                                |
 | Run (Combat)               | <kbd>CTRL</kbd> + <kbd>SPACE</kbd>              |
 | Equipment Set 1            | <kbd>CTRL</kbd> + <kbd>1</kbd>                  |

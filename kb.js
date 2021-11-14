@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Keybindings
 // @description Adds keybindings to Melvor Idle. Visit the Settings menu (X) to view all keybinds.
-// @version     1.1.0
+// @version     1.1.1
 // @license     MIT
 // @match       https://*.melvoridle.com/*
 // @exclude     https://wiki.melvoridle.com*
@@ -66,6 +66,12 @@ window.kb = (() => {
       category: 'General',
       defaultKeys: { key: 'C' },
       callback: () => changePage(CONSTANTS.page.Combat, false, false)
+    },
+    {
+      name: 'Eat Equipped Food',
+      category: 'General',
+      defaultKeys: { key: 'H' },
+      callback: () => player.eatFood()
     },
     {
       name: 'Loot All (Combat)',
