@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Keybindings
 // @description Adds keybindings to Melvor Idle. Visit the Settings menu (X) to view all keybinds.
-// @version     1.0.0
+// @version     1.1.0
 // @match       https://*.melvoridle.com/*
 // @exclude     https://wiki.melvoridle.com*
 // @grant       none
@@ -10,7 +10,7 @@
 
 window.kb = (() => {
   const invalidKeys = ['SHIFT', 'CONTROL', 'ALT', 'META'];
-  let cachePage = currentPage;
+  let cachePage = window.currentPage;
   let previousPage = -1;
   let settingsGrid = null;
   let bindingBeingRemapped = null;
@@ -65,6 +65,71 @@ window.kb = (() => {
       category: 'General',
       defaultKeys: { key: 'C' },
       callback: () => changePage(CONSTANTS.page.Combat, false, false)
+    },
+    {
+      name: 'Loot All (Combat)',
+      category: 'General',
+      defaultKeys: { key: 'SPACE' },
+      callback: () => combatManager.loot.lootAll()
+    },
+    {
+      name: 'Run (Combat)',
+      category: 'General',
+      defaultKeys: { key: 'SPACE', ctrlKey: true },
+      callback: () => combatManager.stopCombat()
+    },
+    {
+      name: 'Equipment Set 1',
+      category: 'General',
+      defaultKeys: { key: '1', ctrlKey: true },
+      callback: () => player.changeEquipmentSet(0)
+    },
+    {
+      name: 'Equipment Set 2',
+      category: 'General',
+      defaultKeys: { key: '2', ctrlKey: true },
+      callback: () => player.changeEquipmentSet(1)
+    },
+    {
+      name: 'Equipment Set 3',
+      category: 'General',
+      defaultKeys: { key: '3', ctrlKey: true },
+      callback: () => player.changeEquipmentSet(2)
+    },
+    {
+      name: 'Equipment Set 4',
+      category: 'General',
+      defaultKeys: { key: '4', ctrlKey: true },
+      callback: () => player.changeEquipmentSet(3)
+    },
+    {
+      name: 'Search Bank',
+      category: 'General',
+      defaultKeys: { key: 'F', ctrlKey: true },
+      callback: () => {
+        changePage(CONSTANTS.page.Bank, false, false);
+        updateBankSearchArray();
+        document.getElementById('searchTextbox').focus();
+      }
+    },
+    {
+      name: 'Summoning Synergies Menu',
+      category: 'General',
+      defaultKeys: { key: 'S' },
+      callback: () => {
+        const modal = $('#modal-summoning-synergy').data('bs.modal');
+        if (!modal || !modal._isShown) openSynergiesBreakdown();
+        else modal.hide();
+      }
+    },
+    {
+      name: 'Search Summoning Synergies',
+      category: 'General',
+      defaultKeys: { key: 'F', ctrlKey: true, altKey: true },
+      callback: () => {
+        openSynergiesBreakdown();
+        document.getElementById('summoning-synergy-search').focus();
+      }
     },
     {
       name: 'Woodcutting',
@@ -151,52 +216,22 @@ window.kb = (() => {
       callback: () => changePage(CONSTANTS.page.Summoning, false, false)
     },
     {
-      name: 'Alt. Magic',
+      name: 'Astrology',
       category: 'General',
       defaultKeys: { key: '%' },
+      callback: () => changePage(CONSTANTS.page.Astrology, false, false)
+    },
+    {
+      name: 'Alt. Magic',
+      category: 'General',
+      defaultKeys: { key: 'M', altKey: true },
       callback: () => changePage(CONSTANTS.page.AltMagic, false, false)
     },
     {
-      name: 'Milestones',
+      name: 'Completion Log',
       category: 'General',
       defaultKeys: { key: 'Y' },
-      callback: () => changePage(CONSTANTS.page.Skills, false, false)
-    },
-    {
-      name: 'Mastery',
-      category: 'General',
-      defaultKeys: { key: 'U' },
-      callback: () => changePage(CONSTANTS.page.Mastery, false, false)
-    },
-    {
-      name: 'Item Log',
-      category: 'General',
-      defaultKeys: { key: 'I' },
-      callback: () => {
-        const modal = $('#modal-item-log').data('bs.modal');
-        if (!modal || !modal._isShown) openItemLog();
-        else modal.hide();
-      }
-    },
-    {
-      name: 'Monster Log',
-      category: 'General',
-      defaultKeys: { key: 'O' },
-      callback: () => {
-        const modal = $('#modal-monster-log').data('bs.modal');
-        if (!modal || !modal._isShown) openMonsterLog();
-        else modal.hide();
-      }
-    },
-    {
-      name: 'Pet Log',
-      category: 'General',
-      defaultKeys: { key: 'P' },
-      callback: () => {
-        const modal = $('#modal-pet-log').data('bs.modal');
-        if (!modal || !modal._isShown) openPetLog();
-        else modal.hide();
-      }
+      callback: () => changePage(30, false, false)
     },
     {
       name: 'Statistics',
@@ -215,53 +250,6 @@ window.kb = (() => {
       category: 'General',
       defaultKeys: { key: 'BACKSPACE' },
       callback: () => changePage(previousPage, false, false)
-    },
-    {
-      name: 'Equipment Set 1',
-      category: 'General',
-      defaultKeys: { key: '1', ctrlKey: true },
-      callback: () => player.changeEquipmentSet(0)
-    },
-    {
-      name: 'Equipment Set 2',
-      category: 'General',
-      defaultKeys: { key: '2', ctrlKey: true },
-      callback: () => player.changeEquipmentSet(1)
-    },
-    {
-      name: 'Equipment Set 3',
-      category: 'General',
-      defaultKeys: { key: '3', ctrlKey: true },
-      callback: () => player.changeEquipmentSet(2)
-    },
-    {
-      name: 'Search Bank',
-      category: 'General',
-      defaultKeys: { key: 'F', ctrlKey: true },
-      callback: () => {
-        changePage(CONSTANTS.page.Bank, false, false);
-        updateBankSearchArray();
-        document.getElementById('searchTextbox').focus();
-      }
-    },
-    {
-      name: 'Summoning Synergies Menu',
-      category: 'General',
-      defaultKeys: { key: 'S' },
-      callback: () => {
-        const modal = $('#modal-summoning-synergy').data('bs.modal');
-        if (!modal || !modal._isShown) openSynergiesBreakdown();
-        else modal.hide();
-      }
-    },
-    {
-      name: 'Search Summoning Synergies',
-      category: 'General',
-      defaultKeys: { key: 'F', ctrlKey: true, altKey: true },
-      callback: () => {
-        openSynergiesBreakdown();
-        document.getElementById('summoning-synergy-search').focus();
-      }
     }
   ];
 
@@ -563,6 +551,7 @@ window.kb = (() => {
   };
 
   const trackCurrentPage = () => {
+    if (window.currentPage === undefined) return;
     if (currentPage === cachePage) return;
       
     endListeningForRemap();
