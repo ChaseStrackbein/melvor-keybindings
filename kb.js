@@ -2,10 +2,11 @@
 // @name        Keybindings
 // @description Adds keybindings to Melvor Idle. Visit the Settings menu (X) to view all keybinds.
 // @version     1.1.0
+// @license     MIT
 // @match       https://*.melvoridle.com/*
 // @exclude     https://wiki.melvoridle.com*
 // @grant       none
-// @namespace   https://github.com/ChaseStrackbein/melvor-keybinds
+// @namespace   https://github.com/ChaseStrackbein/melvor-keybindings
 // ==/UserScript==
 
 window.kb = (() => {
